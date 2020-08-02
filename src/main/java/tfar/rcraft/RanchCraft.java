@@ -1,7 +1,6 @@
-package com.example.examplemod;
+package tfar.rcraft;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,16 +13,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(ExampleMod.MODID)
-public class ExampleMod
+@Mod(RanchCraft.MODID)
+public class RanchCraft
 {
     // Directly reference a log4j logger.
 
-    public static final String MODID = "examplemod";
+    public static final String MODID = "rcraft";
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public ExampleMod() {
+    public RanchCraft() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the doClientStuff method for modloading

@@ -1,4 +1,4 @@
-package com.example.examplemod.mixin;
+package tfar.rcraft.mixin;
 
 import net.minecraft.client.gui.screen.MainMenuScreen;
 import org.spongepowered.asm.mixin.Mixin;
