@@ -12,6 +12,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import tfar.rcraft.client.screen.AnglerScreen;
+import tfar.rcraft.client.screen.CuddlerScreen;
 import tfar.rcraft.client.screen.TenderizerScreen;
 import tfar.rcraft.init.*;
 import tfar.rcraft.menus.TenderizerMenu;
@@ -39,5 +40,6 @@ public class RanchCraft {
     private void doClientStuff(final FMLClientSetupEvent event) {
         ScreenManager.registerFactory(ModMenus.ANGLER, AnglerScreen::new);
         ScreenManager.registerFactory(ModMenus.TENDERIZER, TenderizerScreen::new);
+        ScreenManager.registerFactory(ModMenus.CUDDLER, CuddlerScreen::new);
     }
 }

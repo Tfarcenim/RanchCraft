@@ -2,8 +2,6 @@ package tfar.rcraft.blockentity;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.AnimalEntity;
@@ -11,9 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
@@ -22,7 +18,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.INameable;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
@@ -36,8 +31,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import tfar.rcraft.block.TenderizerBlock;
 import tfar.rcraft.init.ModBlockEntities;
 import tfar.rcraft.init.ModItems;
-import tfar.rcraft.item.FlyRodItem;
 import tfar.rcraft.menus.AnglerMenu;
+import tfar.rcraft.menus.TenderizerMenu;
 import tfar.rcraft.util.Constants;
 
 import javax.annotation.Nonnull;
@@ -53,7 +48,7 @@ public class TenderizerBlockEntity extends TileEntity implements ITickableTileEn
 
 	protected ITextComponent customName;
 
-	private static GameProfile PROFILE = new GameProfile(UUID.fromString("a42ac406-c797-4e0e-b147-f01ac5551be6"), "[MobGrinder]");
+	static GameProfile PROFILE = new GameProfile(UUID.fromString("10c2ac63-c27e-4530-af7d-fa37342364e7"), "[RanchCraft]");
 
 
 	protected boolean needsRefresh = true;
@@ -213,7 +208,7 @@ public class TenderizerBlockEntity extends TileEntity implements ITickableTileEn
 
 	@Nullable
 	@Override
-	public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-		return new AnglerMenu(p_createMenu_1_,p_createMenu_2_,handler, malletHandler);
+	public Container createMenu(int id, PlayerInventory inv, PlayerEntity p_createMenu_3_) {
+		return new TenderizerMenu(id,inv,handler, malletHandler);
 	}
 }

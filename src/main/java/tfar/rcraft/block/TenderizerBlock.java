@@ -21,29 +21,15 @@ import net.minecraft.world.World;
 import tfar.rcraft.blockentity.TenderizerBlockEntity;
 
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 public class TenderizerBlock extends ContainerBlock {
 
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-	public TenderizerBlock(Properties properties) {
-		super(properties);
+	public TenderizerBlock(Properties properties, Supplier<TileEntity> blockEntitySupplier) {
+		super(properties,blockEntitySupplier);
 		setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
-	}
-
-	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (worldIn.isRemote) {
-			return ActionResultType.SUCCESS;
-		} else {
-			INamedContainerProvider inamedcontainerprovider = this.getContainer(state, worldIn, pos);
-			if (inamedcontainerprovider != null) {
-				player.openContainer(inamedcontainerprovider);
-				//player.addStat(this.getOpenStat());
-			}
-
-			return ActionResultType.CONSUME;
-		}
 	}
 
 	@Nullable
@@ -57,9 +43,4 @@ public class TenderizerBlock extends ContainerBlock {
 		builder.add(FACING);
 	}
 
-	@Nullable
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new TenderizerBlockEntity();
-	}
 }
