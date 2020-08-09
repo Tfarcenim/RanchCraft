@@ -1,12 +1,12 @@
 {
   "required": true,
-  "package": "com.example.examplemod.mixin",
+  "package": "tfar.rcraft.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "examplemod.refmap.json",
+  "refmap": "rcraft.refmap.json",
   "mixins": [
+    "FishingBobberEntityMixin"
   ],
-  "client":[
-    "tfar.rcraft.mixin.ExampleMixin"
+  "client": [
   ],
   "injectors": {
     "defaultRequire": 1

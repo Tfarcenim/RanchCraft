@@ -1,58 +1,43 @@
 package tfar.rcraft;
 
 import net.minecraft.block.Block;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.entity.EntityType;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import tfar.rcraft.client.screen.AnglerScreen;
+import tfar.rcraft.client.screen.TenderizerScreen;
+import tfar.rcraft.init.*;
+import tfar.rcraft.menus.TenderizerMenu;
 
-// The value here should match an entry in the META-INF/mods.toml file
 @Mod(RanchCraft.MODID)
-public class RanchCraft
-{
-    // Directly reference a log4j logger.
-
+public class RanchCraft {
     public static final String MODID = "rcraft";
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     public RanchCraft() {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        // Register the doClientStuff method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        bus.addGenericListener(Block.class, ModBlocks::register);
+        bus.addGenericListener(Item.class, ModItems::register);
+        bus.addGenericListener(ContainerType.class, ModMenus::register);
+        bus.addGenericListener(EntityType.class, ModEntities::register);
+        bus.addGenericListener(TileEntityType.class, ModBlockEntities::register);
+
+        bus.addListener(this::setup);
+        bus.addListener(this::doClientStuff);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
-    }
-    // You can use SubscribeEvent and let the Event Bus discover methods to call
-    @SubscribeEvent
-    public void onServerStarting(FMLServerStartingEvent event) {
-        // do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }
-
-    // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
-    // Event bus for receiving Registry Events)
-    @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
-    public static class RegistryEvents {
-        @SubscribeEvent
-        public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
-            // register a new block here
-
-        }
+        ScreenManager.registerFactory(ModMenus.ANGLER, AnglerScreen::new);
+        ScreenManager.registerFactory(ModMenus.TENDERIZER, TenderizerScreen::new);
     }
 }
