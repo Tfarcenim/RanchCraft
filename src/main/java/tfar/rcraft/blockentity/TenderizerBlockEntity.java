@@ -44,15 +44,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class TenderizerBlockEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider, INameable {
-
-	protected ITextComponent customName;
-
+public class TenderizerBlockEntity extends AbstractMachineBlockEntity implements INamedContainerProvider, INameable {
 	static GameProfile PROFILE = new GameProfile(UUID.fromString("10c2ac63-c27e-4530-af7d-fa37342364e7"), "[RanchCraft]");
-
-
-	protected boolean needsRefresh = true;
-
 
 	public static final Method droploot;
 
@@ -67,9 +60,6 @@ public class TenderizerBlockEntity extends TileEntity implements ITickableTileEn
 		dropSpecialItems = ObfuscationReflectionHelper.findMethod(LivingEntity.class, "func_213333_a",
 						DamageSource.class, int.class, boolean.class);
 	}
-
-	protected int processTime = 0;
-	public boolean processing = false;
 
 	public final ItemStackHandler handler = new ItemStackHandler(27) {
 		@Override
@@ -98,74 +88,66 @@ public class TenderizerBlockEntity extends TileEntity implements ITickableTileEn
 	}
 
 	@Override
-	public void tick() {
-		if (!world.isRemote) {
-			if (needsRefresh) {
-				if (!malletHandler.getStackInSlot(0).isEmpty()) {
-					processing = true;
-					this.processTime = 200;
-					needsRefresh = false;
-				} else {
-					processing = false;
-				}
-			}
-
-			if (processing) {
-				if (processTime > 0) {
-					processTime--;
-				} else {
-					Direction dir = getBlockState().get(TenderizerBlock.FACING);
-
-					AxisAlignedBB axisAlignedBB = new AxisAlignedBB(pos.offset(dir)).grow(1,1,1);
-
-					List<AnimalEntity> animals = world.getEntitiesWithinAABB(AnimalEntity.class,axisAlignedBB,animalEntity -> !animalEntity.isChild());
-					ItemStack mallet = malletHandler.getStackInSlot(0);
-
-					for (AnimalEntity animal : animals) {
-						FakePlayer fakePlayer = FakePlayerFactory.get((ServerWorld) world, PROFILE);
-						fakePlayer.setHeldItem(Hand.MAIN_HAND, handler.getStackInSlot(1));
-
-						DamageSource source = DamageSource.causePlayerDamage(fakePlayer);
-
-						ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, animal, fakePlayer, "field_70717_bb");
-
-						animal.captureDrops(new ArrayList<>());
-						int lootingLevel = ForgeHooks.getLootingLevel(animal, fakePlayer, source);
-
-						try {
-							//entity.dropLoot(source,true);
-							droploot.invoke(animal, source, true);
-							//entity.dropSpecialItems(source, lootingLevel, true);
-							dropSpecialItems.invoke(animal, source, lootingLevel, true);
-						} catch (Exception e) {
-							throw new RuntimeException(e);
-						}
-
-						Collection<ItemEntity> mobDrops = animal.captureDrops(null);
-						LivingDropsEvent event = new LivingDropsEvent(animal, source, mobDrops, lootingLevel, true);
-						if (!MinecraftForge.EVENT_BUS.post(event)) {
-							List<ItemStack> stacks = event.getDrops().stream()
-											.map(ItemEntity::getItem)
-											.collect(Collectors.toList());
-
-							for (int i = 0; i < handler.getSlots(); i++) {
-								for (int i1 = 0; i1 < stacks.size(); i1++) {
-									ItemStack stack = stacks.get(i1);
-									if (stack.isEmpty())continue;
-									ItemStack leftovers = handler.insertItem(i, stack, false);
-									stacks.set(i1,leftovers);
-								}
-							}
-						}
-						animal.setChild(true);
-					}
-					if (!animals.isEmpty()) {
-						mallet.setDamage(mallet.getDamage()+1);
-					}
-					needsRefresh = true;
-				}
-			}
+	public void refresh() {
+		if (!malletHandler.getStackInSlot(0).isEmpty()) {
+			active = true;
+			progress = 200;
+		} else {
+			active = false;
 		}
+	}
+
+	@Override
+	public void process() {
+		Direction dir = getBlockState().get(TenderizerBlock.FACING);
+
+		AxisAlignedBB axisAlignedBB = new AxisAlignedBB(pos.offset(dir)).grow(1,1,1);
+
+		List<AnimalEntity> animals = world.getEntitiesWithinAABB(AnimalEntity.class,axisAlignedBB,animalEntity -> !animalEntity.isChild());
+		ItemStack mallet = malletHandler.getStackInSlot(0);
+
+		for (AnimalEntity animal : animals) {
+			FakePlayer fakePlayer = FakePlayerFactory.get((ServerWorld) world, PROFILE);
+			fakePlayer.setHeldItem(Hand.MAIN_HAND, handler.getStackInSlot(1));
+
+			DamageSource source = DamageSource.causePlayerDamage(fakePlayer);
+
+			ObfuscationReflectionHelper.setPrivateValue(LivingEntity.class, animal, fakePlayer, "field_70717_bb");
+
+			animal.captureDrops(new ArrayList<>());
+			int lootingLevel = ForgeHooks.getLootingLevel(animal, fakePlayer, source);
+
+			try {
+				//entity.dropLoot(source,true);
+				droploot.invoke(animal, source, true);
+				//entity.dropSpecialItems(source, lootingLevel, true);
+				dropSpecialItems.invoke(animal, source, lootingLevel, true);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+
+			Collection<ItemEntity> mobDrops = animal.captureDrops(null);
+			LivingDropsEvent event = new LivingDropsEvent(animal, source, mobDrops, lootingLevel, true);
+			if (!MinecraftForge.EVENT_BUS.post(event)) {
+				List<ItemStack> stacks = event.getDrops().stream()
+								.map(ItemEntity::getItem)
+								.collect(Collectors.toList());
+
+				for (int i = 0; i < handler.getSlots(); i++) {
+					for (int i1 = 0; i1 < stacks.size(); i1++) {
+						ItemStack stack = stacks.get(i1);
+						if (stack.isEmpty())continue;
+						ItemStack leftovers = handler.insertItem(i, stack, false);
+						stacks.set(i1,leftovers);
+					}
+				}
+			}
+			animal.setChild(true);
+		}
+		if (!animals.isEmpty()) {
+			mallet.setDamage(mallet.getDamage()+1);
+		}
+		needsRefresh = true;
 	}
 
 	@Override
@@ -192,7 +174,7 @@ public class TenderizerBlockEntity extends TileEntity implements ITickableTileEn
 	}
 
 	ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container.rcraft.angler");
+		return new TranslationTextComponent("container.rcraft.tenderizer");
 	}
 
 	@Override

@@ -32,14 +32,9 @@ import java.util.List;
 
 import static tfar.rcraft.blockentity.TenderizerBlockEntity.PROFILE;
 
-public class CuddlerBlockEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider, INameable {
+public class CuddlerBlockEntity extends AbstractMachineBlockEntity implements INamedContainerProvider, INameable {
 
 	protected ITextComponent customName;
-
-	protected boolean needsRefresh = true;
-
-	protected int processTime = 0;
-	public boolean processing = false;
 
 	public final ItemStackHandler feedHandler = new ItemStackHandler() {
 		@Override
@@ -48,11 +43,6 @@ public class CuddlerBlockEntity extends TileEntity implements ITickableTileEntit
 			markDirty();
 			needsRefresh = true;
 		}
-
-		@Override
-		public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
-			return super.isItemValid(slot, stack);
-		}
 	};
 
 	public CuddlerBlockEntity() {
@@ -60,56 +50,48 @@ public class CuddlerBlockEntity extends TileEntity implements ITickableTileEntit
 	}
 
 	@Override
-	public void tick() {
-		if (!world.isRemote) {
-			if (needsRefresh) {
-				if (!feedHandler.getStackInSlot(0).isEmpty()) {
-					processing = true;
-					this.processTime = 200;
-					needsRefresh = false;
-				} else {
-					processing = false;
-				}
-			}
-			if (processing) {
-				if (processTime > 0) {
-					processTime--;
-				} else {
-
-					AxisAlignedBB axisAlignedBB = new AxisAlignedBB(pos).grow(2,2,2);
-
-					List<AnimalEntity> animals = world.getEntitiesWithinAABB(AnimalEntity.class,axisAlignedBB,animalEntity -> !animalEntity.isChild() && animalEntity.canBreed());
-					if (animals.size() > 78)return;
-
-					ItemStack feed = feedHandler.getStackInSlot(0);
-
-					int index = -1;
-					int index2 = -1;
-					for (int i = 0; i < animals.size(); i++) {
-						AnimalEntity animal = animals.get(i);
-						for (int j = 0; j < animals.size();j++) {
-							if (i == j)continue;
-							AnimalEntity other = animals.get(j);
-							if (other.getType() == animal.getType()) {
-								index = i;
-								index2 = j;
-								break;
-							}
-						}
-					}
-					if (index != -1 && index2 != -1) {
-
-						FakePlayer fakePlayer = FakePlayerFactory.get((ServerWorld) world, PROFILE);
-						fakePlayer.setHeldItem(Hand.MAIN_HAND, feed);
-
-						animals.get(index).func_230254_b_(fakePlayer, Hand.MAIN_HAND);
-						animals.get(index2).func_230254_b_(fakePlayer, Hand.MAIN_HAND);
-					}
-					needsRefresh = true;
-				}
-			}
+	public void refresh() {
+		if (feedHandler.getStackInSlot(0).getCount() > 1) {
+			active = true;
+			this.progress = 200;
+		} else {
+			active = false;
 		}
 	}
+
+	@Override
+	public void process() {
+				AxisAlignedBB axisAlignedBB = new AxisAlignedBB(pos).grow(2,2,2);
+
+				List<AnimalEntity> animals = world.getEntitiesWithinAABB(AnimalEntity.class,axisAlignedBB,animalEntity -> !animalEntity.isChild() && animalEntity.canBreed());
+				if (animals.size() > 78)return;
+
+				ItemStack feed = feedHandler.getStackInSlot(0);
+
+				int index = -1;
+				int index2 = -1;
+				for (int i = 0; i < animals.size(); i++) {
+					AnimalEntity animal = animals.get(i);
+					for (int j = 0; j < animals.size();j++) {
+						if (i == j)continue;
+						AnimalEntity other = animals.get(j);
+						if (other.getType() == animal.getType()) {
+							index = i;
+							index2 = j;
+							break;
+						}
+					}
+				}
+				if (index != -1 && index2 != -1) {
+
+					FakePlayer fakePlayer = FakePlayerFactory.get((ServerWorld) world, PROFILE);
+					fakePlayer.setHeldItem(Hand.MAIN_HAND, feed);
+
+					animals.get(index).func_230254_b_(fakePlayer, Hand.MAIN_HAND);
+					animals.get(index2).func_230254_b_(fakePlayer, Hand.MAIN_HAND);
+				}
+				needsRefresh = true;
+			}
 
 	@Override
 	public void read(BlockState state, CompoundNBT nbt) {

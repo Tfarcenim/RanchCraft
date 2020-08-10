@@ -11,8 +11,6 @@ import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.INameable;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
@@ -28,14 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class AnglerBlockEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider, INameable {
-
-	protected ITextComponent customName;
-
-	protected boolean needsRefresh = true;
-
-	protected int processTime = 0;
-	public boolean processing = false;
+public class AnglerBlockEntity extends AbstractMachineBlockEntity implements INamedContainerProvider, INameable {
 
 	public final ItemStackHandler handler = new ItemStackHandler(27) {
 		@Override
@@ -64,43 +55,36 @@ public class AnglerBlockEntity extends TileEntity implements ITickableTileEntity
 	}
 
 	@Override
-	public void tick() {
-		if (!world.isRemote) {
-			if (needsRefresh) {
-				if (!rodHandler.getStackInSlot(0).isEmpty()) {
-					ItemStack fishingRod = rodHandler.getStackInSlot(0);
-					processing = true;
-					this.processTime = MathHelper.nextInt(world.rand, 100, fishingRod.getItem() instanceof FlyRodItem ? 500 : 600);
-					this.processTime -= EnchantmentHelper.getEnchantmentLevel(Enchantments.LURE, fishingRod) * 100;
-					needsRefresh = false;
-				} else {
-					processing = false;
-				}
-			}
+	public void refresh() {
+		if (!rodHandler.getStackInSlot(0).isEmpty()) {
+			ItemStack fishingRod = rodHandler.getStackInSlot(0);
+			active = true;
+			this.progress = MathHelper.nextInt(world.rand, 100, fishingRod.getItem() instanceof FlyRodItem ? 500 : 600);
+			this.progress -= EnchantmentHelper.getEnchantmentLevel(Enchantments.LURE, fishingRod) * 100;
+			needsRefresh = false;
+		} else {
+			active = false;
+		}
+	}
 
-			if (processing) {
-				if (processTime > 0) {
-					processTime--;
-				} else {
-					ItemStack fishingRod = rodHandler.getStackInSlot(0);
-					LootContext.Builder builder = (new LootContext.Builder((ServerWorld)this.world))
-									.withParameter(LootParameters.POSITION, pos.down()).withParameter(LootParameters.TOOL, fishingRod).withRandom(world.rand)
-									.withLuck((float)EnchantmentHelper.getFishingLuckBonus(fishingRod) + /*this.owner.getLuck()*/ 0);
-					LootTable lootTable = this.world.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING);
-					List<ItemStack> list = lootTable.generate(builder.build(LootParameterSets.FISHING));
-					for (int i = 0; i < handler.getSlots(); i++) {
-						for (int i1 = 0; i1 < list.size(); i1++) {
-							ItemStack stack = list.get(i1);
-							if (stack.isEmpty())continue;
-							ItemStack leftovers = handler.insertItem(i, stack, false);
-							list.set(i1,leftovers);
-						}
-					}
-					fishingRod.setDamage(fishingRod.getDamage()+1);
-					needsRefresh = true;
-				}
+	@Override
+	public void process() {
+		ItemStack fishingRod = rodHandler.getStackInSlot(0);
+		LootContext.Builder builder = (new LootContext.Builder((ServerWorld)this.world))
+						.withParameter(LootParameters.POSITION, pos.down()).withParameter(LootParameters.TOOL, fishingRod).withRandom(world.rand)
+						.withLuck((float)EnchantmentHelper.getFishingLuckBonus(fishingRod) + /*this.owner.getLuck()*/ 0);
+		LootTable lootTable = this.world.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING);
+		List<ItemStack> list = lootTable.generate(builder.build(LootParameterSets.FISHING));
+		for (int i = 0; i < handler.getSlots(); i++) {
+			for (int i1 = 0; i1 < list.size(); i1++) {
+				ItemStack stack = list.get(i1);
+				if (stack.isEmpty())continue;
+				ItemStack leftovers = handler.insertItem(i, stack, false);
+				list.set(i1,leftovers);
 			}
 		}
+		fishingRod.setDamage(fishingRod.getDamage()+1);
+		needsRefresh = true;
 	}
 
 	@Override
