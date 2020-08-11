@@ -35,7 +35,7 @@ public class TenderizerBlock extends ContainerBlock {
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return this.getDefaultState().with(FACING, context.getNearestLookingDirection().getOpposite());
+		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 
 	@Override

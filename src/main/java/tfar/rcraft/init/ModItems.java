@@ -18,6 +18,8 @@ public class ModItems {
 	public static Item MALLET;
 	public static Item MULTITOOL;
 	public static Item SOAKED_LEATHER;
+	public static Item TANNED_LEATHER;
+	public static Item TANNING_RACK;
 	public static Item TENDERIZER;
 	public static Item WHEEL;
 
@@ -36,6 +38,8 @@ public class ModItems {
 		MALLET = RegisterHelper.register(new Item(new Item.Properties().maxDamage(128).group(TAB)),"mallet", event.getRegistry());
 		MULTITOOL = RegisterHelper.register(new MultiToolItem(new Item.Properties().group(TAB)),"multitool", event.getRegistry());
 		SOAKED_LEATHER = RegisterHelper.register(new Item(new Item.Properties().group(TAB)),"soaked_leather", event.getRegistry());
+		TANNED_LEATHER = RegisterHelper.register(new Item(new Item.Properties().group(TAB)),"tanned_leather", event.getRegistry());
+		TANNING_RACK = RegisterHelper.register(new BlockItem(ModBlocks.TANNING_RACK,new Item.Properties().group(TAB)),"tanning_rack", event.getRegistry());
 		TENDERIZER = RegisterHelper.register(new BlockItem(ModBlocks.TENDERIZER,new Item.Properties().group(TAB)),"tenderizer", event.getRegistry());
 		WHEEL = RegisterHelper.register(new Item(new Item.Properties().group(TAB)),"wheel", event.getRegistry());
 
