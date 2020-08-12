@@ -11,11 +11,9 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import tfar.rcraft.client.screen.AnglerScreen;
-import tfar.rcraft.client.screen.CuddlerScreen;
-import tfar.rcraft.client.screen.IncubatorScreen;
-import tfar.rcraft.client.screen.TenderizerScreen;
+import tfar.rcraft.client.screen.*;
 import tfar.rcraft.init.*;
+import tfar.rcraft.menus.TannedSatchelMenu;
 import tfar.rcraft.menus.TenderizerMenu;
 
 @Mod(RanchCraft.MODID)
@@ -42,7 +40,7 @@ public class RanchCraft {
         ScreenManager.registerFactory(ModMenus.ANGLER, AnglerScreen::new);
         ScreenManager.registerFactory(ModMenus.CUDDLER, CuddlerScreen::new);
         ScreenManager.registerFactory(ModMenus.INCUBATOR, IncubatorScreen::new);
+        ScreenManager.registerFactory(ModMenus.TANNED_SATCHEL, TannedSatchelScreen::new);
         ScreenManager.registerFactory(ModMenus.TENDERIZER, TenderizerScreen::new);
-
     }
 }
