@@ -23,8 +23,6 @@ public class TanningRackBlockEntityRenderer extends TileEntityRenderer<TanningRa
 
 			if (blockEntity.handler.getStackInSlot(0).isEmpty() && blockEntity.handler.getStackInSlot(1).isEmpty()) return;
 
-			BlockState state = blockEntity.getBlockState();
-
 			final double spacing = .189;
 			final double offset = .31;
 			//translate x,y,z

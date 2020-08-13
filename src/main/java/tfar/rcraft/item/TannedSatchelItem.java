@@ -5,10 +5,9 @@ import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import tfar.rcraft.menus.ItemStackMenuProvider;
+import tfar.rcraft.menus.TannedSatchelMenuProvider;
 
 public class TannedSatchelItem extends Item {
 	public TannedSatchelItem(Properties properties) {
@@ -21,7 +20,7 @@ public class TannedSatchelItem extends Item {
 		if (worldIn.isRemote) {
 			return ActionResult.resultSuccess(stack);
 		} else {
-			INamedContainerProvider inamedcontainerprovider = new ItemStackMenuProvider(stack);
+			INamedContainerProvider inamedcontainerprovider = new TannedSatchelMenuProvider(stack);
 			playerIn.openContainer(inamedcontainerprovider);
 			return ActionResult.resultConsume(stack);
 		}

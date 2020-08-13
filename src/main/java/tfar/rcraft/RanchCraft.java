@@ -40,6 +40,7 @@ public class RanchCraft {
         ScreenManager.registerFactory(ModMenus.ANGLER, AnglerScreen::new);
         ScreenManager.registerFactory(ModMenus.CUDDLER, CuddlerScreen::new);
         ScreenManager.registerFactory(ModMenus.INCUBATOR, IncubatorScreen::new);
+        ScreenManager.registerFactory(ModMenus.TANNED_CHEST, TannedChestScreen::new);
         ScreenManager.registerFactory(ModMenus.TANNED_SATCHEL, TannedSatchelScreen::new);
         ScreenManager.registerFactory(ModMenus.TENDERIZER, TenderizerScreen::new);
     }
