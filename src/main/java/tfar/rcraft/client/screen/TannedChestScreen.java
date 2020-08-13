@@ -15,7 +15,8 @@ public class TannedChestScreen extends ContainerScreen<TannedChestMenu> {
 
 	public TannedChestScreen(TannedChestMenu screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
-		this.playerInventoryTitleY = this.ySize - 92;
+		this.ySize = 114 + 6 * 18;
+		this.playerInventoryTitleY = this.ySize - 94;
 	}
 
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
@@ -30,7 +31,7 @@ public class TannedChestScreen extends ContainerScreen<TannedChestMenu> {
 		this.minecraft.getTextureManager().bindTexture(CHEST_GUI_TEXTURE);
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
-		this.blit(matrixStack, i, j, 0, 0, this.xSize, 3 * 18 + 17);
-		this.blit(matrixStack, i, j + 3 * 18 + 17, 0, 126, this.xSize, 96);
+		this.blit(matrixStack, i, j, 0, 0, this.xSize, 6 * 18 + 17);
+		this.blit(matrixStack, i, j + 6 * 18 + 17, 0, 126, this.xSize, 96);
 	}
 }

@@ -26,11 +26,11 @@ public class TannedChestMenu extends Container {
 	public TannedChestMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler handler) {
 		super(ModMenus.TANNED_CHEST, id);
 		stackHandler = handler;
-		int i = -18;
+		int i = 36;
 
 		for(int j = 0; j < 6; ++j) {
 			for(int k = 0; k < 9; ++k) {
-				this.addSlot(new SlotItemHandler(stackHandler, k + j * 9, 8 + k * 18, 18 * 3 + j * 18));
+				this.addSlot(new SlotItemHandler(stackHandler, k + j * 9, 8 + k * 18, 18 * 1 + j * 18));
 			}
 		}
 
