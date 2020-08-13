@@ -13,6 +13,7 @@ import net.minecraft.loot.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.INameable;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
@@ -71,7 +72,8 @@ public class AnglerBlockEntity extends AbstractMachineBlockEntity implements INa
 	public void process() {
 		ItemStack fishingRod = rodHandler.getStackInSlot(0);
 		LootContext.Builder builder = (new LootContext.Builder((ServerWorld)this.world))
-						.withParameter(LootParameters.POSITION, pos.down()).withParameter(LootParameters.TOOL, fishingRod).withRandom(world.rand)
+						.withParameter(LootParameters.TOOL, fishingRod).withRandom(world.rand)
+						.withParameter(LootParameters.field_237457_g_, new Vector3d(pos.getX(),pos.getY(),pos.getZ()))
 						.withLuck((float)EnchantmentHelper.getFishingLuckBonus(fishingRod) + /*this.owner.getLuck()*/ 0);
 		LootTable lootTable = this.world.getServer().getLootTableManager().getLootTableFromLocation(LootTables.GAMEPLAY_FISHING);
 		List<ItemStack> list = lootTable.generate(builder.build(LootParameterSets.FISHING));

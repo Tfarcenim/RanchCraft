@@ -52,7 +52,7 @@ public class ModItems {
 						"fox","turtle","rabbit","llama","panda","wolf"};
 
 		for (String string : strings) {
-			RegisterHelper.register(new IncubatingEggItem(properties, Registry.ITEM.getValue(new ResourceLocation(string+"_spawn_egg"))
+			RegisterHelper.register(new IncubatingEggItem(properties, Registry.ITEM.func_241873_b(new ResourceLocation(string+"_spawn_egg"))
 							.orElseThrow(() -> new IllegalArgumentException(string+" not found"))),"incubating_"+string+"_egg",event.getRegistry());
 		}
 	}
