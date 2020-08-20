@@ -1,4 +1,4 @@
-package tfar.rcraft.menus;
+package tfar.rcraft.menu;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,7 +9,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import tfar.rcraft.init.ModMenus;
 
-public class TenderizerMenu extends Container {
+public class AnglerMenu extends Container {
 
 	protected final ItemStackHandler stackHandler;
 
@@ -20,12 +20,12 @@ public class TenderizerMenu extends Container {
 		return true;
 	}
 
-	public TenderizerMenu(int id, PlayerInventory playerInventoryIn) {
+	public AnglerMenu(int id, PlayerInventory playerInventoryIn) {
 		this(id,playerInventoryIn,new ItemStackHandler(27),new ItemStackHandler());
 	}
 
-	public TenderizerMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler handler, ItemStackHandler rodHolder) {
-		super(ModMenus.TENDERIZER, id);
+	public AnglerMenu(int id, PlayerInventory playerInventoryIn,ItemStackHandler handler,ItemStackHandler rodHolder) {
+		super(ModMenus.ANGLER, id);
 		stackHandler = handler;
 		fishingRodHolder = rodHolder;
 		int i = 17;

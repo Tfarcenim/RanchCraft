@@ -8,9 +8,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.INameable;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,12 +18,9 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.items.ItemStackHandler;
 import tfar.rcraft.init.ModBlockEntities;
-import tfar.rcraft.init.ModItems;
-import tfar.rcraft.menus.AnglerMenu;
-import tfar.rcraft.menus.CuddlerMenu;
+import tfar.rcraft.menu.CuddlerMenu;
 import tfar.rcraft.util.Constants;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 

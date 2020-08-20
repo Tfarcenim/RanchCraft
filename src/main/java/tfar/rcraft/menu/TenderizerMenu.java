@@ -1,4 +1,4 @@
-package tfar.rcraft.menus;
+package tfar.rcraft.menu;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,26 +9,34 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import tfar.rcraft.init.ModMenus;
 
-public class IncubatorMenu extends Container {
+public class TenderizerMenu extends Container {
 
-	protected final ItemStackHandler incubatorHolder;
+	protected final ItemStackHandler stackHandler;
+
+	protected final ItemStackHandler fishingRodHolder;
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
 		return true;
 	}
 
-	public IncubatorMenu(int id, PlayerInventory playerInventoryIn) {
-		this(id,playerInventoryIn,new ItemStackHandler(2));
+	public TenderizerMenu(int id, PlayerInventory playerInventoryIn) {
+		this(id,playerInventoryIn,new ItemStackHandler(27),new ItemStackHandler());
 	}
 
-	public IncubatorMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler rodHolder) {
-		super(ModMenus.INCUBATOR, id);
-		incubatorHolder = rodHolder;
-		int i = -52;
+	public TenderizerMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler handler, ItemStackHandler rodHolder) {
+		super(ModMenus.TENDERIZER, id);
+		stackHandler = handler;
+		fishingRodHolder = rodHolder;
+		int i = 17;
 
-		this.addSlot(new SlotItemHandler(incubatorHolder, 0, 52, 20));
-		this.addSlot(new SlotItemHandler(incubatorHolder, 1, 107, 20));
+		this.addSlot(new SlotItemHandler(fishingRodHolder, 0, 8 + 4 * 18, 18));
+		for(int j = 0; j < 3; ++j) {
+			for(int k = 0; k < 9; ++k) {
+				this.addSlot(new SlotItemHandler(stackHandler, k + j * 9, 8 + k * 18, 18 * 3 + j * 18));
+			}
+		}
+
 
 		for(int l = 0; l < 3; ++l) {
 			for(int j1 = 0; j1 < 9; ++j1) {

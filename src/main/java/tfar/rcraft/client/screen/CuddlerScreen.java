@@ -7,8 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import tfar.rcraft.RanchCraft;
-import tfar.rcraft.menus.CuddlerMenu;
-import tfar.rcraft.menus.TenderizerMenu;
+import tfar.rcraft.menu.CuddlerMenu;
 
 public class CuddlerScreen extends ContainerScreen<CuddlerMenu> {
 

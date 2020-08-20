@@ -1,4 +1,4 @@
-package tfar.rcraft.menus;
+package tfar.rcraft.menu;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,31 +9,26 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import tfar.rcraft.init.ModMenus;
 
-public class TannedChestMenu extends Container {
+public class IncubatorMenu extends Container {
 
-	protected final ItemStackHandler stackHandler;
-
+	protected final ItemStackHandler incubatorHolder;
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
 		return true;
 	}
 
-	public TannedChestMenu(int id, PlayerInventory playerInventoryIn) {
-		this(id,playerInventoryIn,new ItemStackHandler(54));
+	public IncubatorMenu(int id, PlayerInventory playerInventoryIn) {
+		this(id,playerInventoryIn,new ItemStackHandler(2));
 	}
 
-	public TannedChestMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler handler) {
-		super(ModMenus.TANNED_CHEST, id);
-		stackHandler = handler;
-		int i = 36;
+	public IncubatorMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler rodHolder) {
+		super(ModMenus.INCUBATOR, id);
+		incubatorHolder = rodHolder;
+		int i = -52;
 
-		for(int j = 0; j < 6; ++j) {
-			for(int k = 0; k < 9; ++k) {
-				this.addSlot(new SlotItemHandler(stackHandler, k + j * 9, 8 + k * 18, 18 * 1 + j * 18));
-			}
-		}
-
+		this.addSlot(new SlotItemHandler(incubatorHolder, 0, 52, 20));
+		this.addSlot(new SlotItemHandler(incubatorHolder, 1, 107, 20));
 
 		for(int l = 0; l < 3; ++l) {
 			for(int j1 = 0; j1 < 9; ++j1) {

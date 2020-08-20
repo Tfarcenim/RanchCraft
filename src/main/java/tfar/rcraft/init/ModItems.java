@@ -13,6 +13,7 @@ import tfar.rcraft.item.TannedSatchelItem;
 public class ModItems {
 
 	public static Item ANGLER;
+	public static Item CAST_IRON_STOVE;
 	public static Item CUDDLER;
 	public static Item FLY_ROD;
 	public static Item INCUBATOR;
@@ -35,6 +36,7 @@ public class ModItems {
 
 	public static void register(RegistryEvent.Register<Item> event) {
 		ANGLER = RegisterHelper.register(new BlockItem(ModBlocks.ANGLER,new Item.Properties().group(TAB)),"angler", event.getRegistry());
+		FLY_ROD = RegisterHelper.register(new BlockItem(ModBlocks.CAST_IRON_STOVE,new Item.Properties().group(TAB)),"cast_iron_stove", event.getRegistry());
 		CUDDLER = RegisterHelper.register(new BlockItem(ModBlocks.CUDDLER,new Item.Properties().group(TAB)),"cuddler", event.getRegistry());
 		FLY_ROD = RegisterHelper.register(new FlyRodItem(new Item.Properties().maxDamage(128).group(TAB)),"fly_rod", event.getRegistry());
 		INCUBATOR = RegisterHelper.register(new BlockItem(ModBlocks.INCUBATOR,new Item.Properties().group(TAB)),"incubator", event.getRegistry());

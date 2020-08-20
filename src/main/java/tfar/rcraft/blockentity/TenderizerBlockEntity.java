@@ -11,8 +11,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -31,8 +29,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import tfar.rcraft.block.TenderizerBlock;
 import tfar.rcraft.init.ModBlockEntities;
 import tfar.rcraft.init.ModItems;
-import tfar.rcraft.menus.AnglerMenu;
-import tfar.rcraft.menus.TenderizerMenu;
+import tfar.rcraft.menu.TenderizerMenu;
 import tfar.rcraft.util.Constants;
 
 import javax.annotation.Nonnull;

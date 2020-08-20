@@ -13,8 +13,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import tfar.rcraft.client.screen.*;
 import tfar.rcraft.init.*;
-import tfar.rcraft.menus.TannedSatchelMenu;
-import tfar.rcraft.menus.TenderizerMenu;
 
 @Mod(RanchCraft.MODID)
 public class RanchCraft {
@@ -38,6 +36,7 @@ public class RanchCraft {
 
     private void doClientStuff(final FMLClientSetupEvent event) {
         ScreenManager.registerFactory(ModMenus.ANGLER, AnglerScreen::new);
+        ScreenManager.registerFactory(ModMenus.CAST_IRON_STOVE, CastIronStoveScreen::new);
         ScreenManager.registerFactory(ModMenus.CUDDLER, CuddlerScreen::new);
         ScreenManager.registerFactory(ModMenus.INCUBATOR, IncubatorScreen::new);
         ScreenManager.registerFactory(ModMenus.TANNED_CHEST, TannedChestScreen::new);

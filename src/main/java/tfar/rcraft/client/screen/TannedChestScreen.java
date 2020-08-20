@@ -6,8 +6,7 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import tfar.rcraft.menus.TannedChestMenu;
-import tfar.rcraft.menus.TannedSatchelMenu;
+import tfar.rcraft.menu.TannedChestMenu;
 
 public class TannedChestScreen extends ContainerScreen<TannedChestMenu> {
 

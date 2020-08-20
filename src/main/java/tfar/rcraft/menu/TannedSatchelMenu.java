@@ -1,4 +1,4 @@
-package tfar.rcraft.menus;
+package tfar.rcraft.menu;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -8,26 +8,31 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import tfar.rcraft.init.ModMenus;
+import tfar.rcraft.inventory.TannedSatchelItemStackHandler;
 
-public class CuddlerMenu extends Container {
+public class TannedSatchelMenu extends Container {
 
-	protected final ItemStackHandler feedHolder;
+	protected final ItemStackHandler stackHandler;
 
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
 		return true;
 	}
 
-	public CuddlerMenu(int id, PlayerInventory playerInventoryIn) {
-		this(id,playerInventoryIn,new ItemStackHandler());
+	public TannedSatchelMenu(int id, PlayerInventory playerInventoryIn) {
+		this(id,playerInventoryIn,new TannedSatchelItemStackHandler(27, ItemStack.EMPTY));
 	}
 
-	public CuddlerMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler rodHolder) {
-		super(ModMenus.CUDDLER, id);
-		feedHolder = rodHolder;
-		int i = -52;
+	public TannedSatchelMenu(int id, PlayerInventory playerInventoryIn, ItemStackHandler handler) {
+		super(ModMenus.TANNED_SATCHEL, id);
+		stackHandler = handler;
+		int i = -18;
 
-		this.addSlot(new SlotItemHandler(feedHolder, 0, 80, 20));
+		for(int j = 0; j < 3; ++j) {
+			for(int k = 0; k < 9; ++k) {
+				this.addSlot(new SlotItemHandler(stackHandler, k + j * 9, 8 + k * 18, 18 + j * 18));
+			}
+		}
 
 		for(int l = 0; l < 3; ++l) {
 			for(int j1 = 0; j1 < 9; ++j1) {

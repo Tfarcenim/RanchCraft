@@ -20,7 +20,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.items.ItemStackHandler;
 import tfar.rcraft.init.ModBlockEntities;
 import tfar.rcraft.item.FlyRodItem;
-import tfar.rcraft.menus.AnglerMenu;
+import tfar.rcraft.menu.AnglerMenu;
 import tfar.rcraft.util.Constants;
 
 import javax.annotation.Nonnull;

@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import tfar.rcraft.menus.TannedSatchelMenuProvider;
+import tfar.rcraft.menu.TannedSatchelMenuProvider;
 
 public class TannedSatchelItem extends Item {
 	public TannedSatchelItem(Properties properties) {

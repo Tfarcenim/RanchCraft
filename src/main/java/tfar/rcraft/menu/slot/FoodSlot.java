@@ -1,4 +1,4 @@
-package tfar.rcraft.inventory;
+package tfar.rcraft.menu.slot;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Tags;

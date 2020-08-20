@@ -13,8 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.items.ItemStackHandler;
 import tfar.rcraft.init.ModBlockEntities;
 import tfar.rcraft.item.IncubatingEggItem;
-import tfar.rcraft.menus.CuddlerMenu;
-import tfar.rcraft.menus.IncubatorMenu;
+import tfar.rcraft.menu.IncubatorMenu;
 import tfar.rcraft.util.Constants;
 
 import javax.annotation.Nonnull;

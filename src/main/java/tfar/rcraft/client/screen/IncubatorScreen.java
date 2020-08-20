@@ -7,8 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import tfar.rcraft.RanchCraft;
-import tfar.rcraft.menus.CuddlerMenu;
-import tfar.rcraft.menus.IncubatorMenu;
+import tfar.rcraft.menu.IncubatorMenu;
 
 public class IncubatorScreen extends ContainerScreen<IncubatorMenu> {
 

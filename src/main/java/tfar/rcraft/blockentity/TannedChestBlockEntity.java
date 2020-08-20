@@ -12,8 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.items.ItemStackHandler;
 import tfar.rcraft.init.ModBlockEntities;
-import tfar.rcraft.menus.CuddlerMenu;
-import tfar.rcraft.menus.TannedChestMenu;
+import tfar.rcraft.menu.TannedChestMenu;
 import tfar.rcraft.util.Constants;
 
 import javax.annotation.Nullable;
