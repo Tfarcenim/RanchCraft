@@ -150,7 +150,7 @@ public class CastIronStoveBlockEntity extends TileEntity implements ITickableTil
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         compound.put(Constants.INV, handler.serializeNBT());
-        compound.putInt("");
+        compound.putInt("remainingBurnTime",remainingBurnTime);
         return super.write(compound);
     }
 

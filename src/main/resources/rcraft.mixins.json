@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "rcraft.refmap.json",
   "mixins": [
+    "BlockMixin",
     "FishingBobberEntityMixin",
     "ItemEntityMixin"
   ],
